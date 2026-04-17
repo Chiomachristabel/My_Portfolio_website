@@ -1,420 +1,1179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chioma Christabel Okpetah — ML Engineer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chioma Christabel Okpetah — ML Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050508;
+  --surface: #0d0d14;
+  --surface2: #13131f;
+  --cyan: #00f5d4;
+  --violet: #7c3aed;
+  --pink: #f72585;
+  --text: #e8e6ff;
+  --muted: #6b6880;
+  --border: rgba(124, 58, 237, 0.15);
+  --glow-cyan: 0 0 30px rgba(0,245,212,0.25);
+  --glow-violet: 0 0 30px rgba(124,58,237,0.3);
+}
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-  <!-- Your stylesheet -->
-  <link rel="stylesheet" href="style.css">
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CUSTOM CURSOR */
+.cursor {
+  position: fixed;
+  width: 12px; height: 12px;
+  background: var(--cyan);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease, opacity 0.15s;
+  mix-blend-mode: screen;
+  top: 0; left: 0;
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 40px; height: 40px;
+  border: 1px solid rgba(0,245,212,0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.4s ease, width 0.3s, height 0.3s, border-color 0.3s;
+  top: 0; left: 0;
+}
+
+/* NOISE OVERLAY */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.4;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.25rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(5,5,8,0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  color: var(--cyan);
+  text-decoration: none;
+}
+
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 1px;
+  background: var(--cyan);
+  transform: scaleX(0);
+  transition: transform 0.2s;
+  transform-origin: left;
+}
+.nav-links a:hover { color: var(--cyan); }
+.nav-links a:hover::after { transform: scaleX(1); }
+
+/* HERO */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 8rem 4rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+}
+
+.hero-orb-1 {
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+  top: -100px; right: -150px;
+  animation: float 8s ease-in-out infinite;
+}
+
+.hero-orb-2 {
+  position: absolute;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,245,212,0.1) 0%, transparent 70%);
+  bottom: 0; left: -100px;
+  animation: float 10s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+
+.hero-content { position: relative; z-index: 2; max-width: 900px; }
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0,245,212,0.06);
+  border: 1px solid rgba(0,245,212,0.2);
+  border-radius: 100px;
+  padding: 6px 18px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: slideUp 0.6s 0.2s ease forwards;
+}
+
+.hero-tag-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--cyan);
+  animation: pulse 2s infinite;
+  box-shadow: 0 0 8px var(--cyan);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.7); }
+}
+
+h1.hero-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: slideUp 0.7s 0.35s ease forwards;
+}
+
+.name-line-1 { display: block; color: var(--text); }
+.name-line-2 {
+  display: block;
+  background: linear-gradient(135deg, var(--cyan) 0%, var(--violet) 50%, var(--pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradShift 4s ease infinite, slideUp 0.7s 0.35s ease forwards;
+}
+.name-line-3 { display: block; color: var(--text); }
+
+@keyframes gradShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.hero-desc {
+  font-size: 17px;
+  color: var(--muted);
+  max-width: 560px;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: slideUp 0.7s 0.5s ease forwards;
+}
+
+.hero-desc strong { color: var(--text); font-weight: 500; }
+
+.hero-ctas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: slideUp 0.7s 0.65s ease forwards;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: none;
+  transition: all 0.25s;
+  letter-spacing: 0.02em;
+}
+
+.btn-primary {
+  background: var(--cyan);
+  color: #050508;
+  border: none;
+  box-shadow: 0 0 20px rgba(0,245,212,0.3);
+}
+.btn-primary:hover {
+  background: #fff;
+  box-shadow: 0 0 40px rgba(0,245,212,0.5);
+  transform: translateY(-3px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-outline:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  transform: translateY(-3px);
+  box-shadow: var(--glow-cyan);
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeIn 1s 1.2s ease forwards;
+}
+
+.hero-scroll span { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+.scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--cyan), transparent);
+  animation: scrollPulse 2s ease infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.1); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* SECTION SHARED */
+.section-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 7rem 4rem;
+  position: relative;
+  z-index: 2;
+}
+
+.section-header { margin-bottom: 4rem; }
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 1rem;
+}
+
+.section-eyebrow::before {
+  content: '';
+  width: 30px; height: 1px;
+  background: var(--cyan);
+  box-shadow: 0 0 6px var(--cyan);
+}
+
+h2.section-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+/* ABOUT */
+#about { border-top: 1px solid var(--border); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.about-avatar {
+  position: relative;
+}
+
+.avatar-box {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-box::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--cyan), var(--violet), var(--pink));
+  z-index: -1;
+  opacity: 0.5;
+}
+
+.avatar-initials {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 5rem;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.avatar-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.about-tag-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.chip {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  transition: all 0.2s;
+}
+
+.chip:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.about-text p {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.9;
+  margin-bottom: 1.25rem;
+}
+
+.about-text p strong { color: var(--text); font-weight: 500; }
+.about-text p:last-child { margin-bottom: 0; }
+
+/* SKILLS */
+#skills { border-top: 1px solid var(--border); }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.skill-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.75rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+
+.skill-card:hover {
+  border-color: rgba(0,245,212,0.25);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 30px rgba(0,245,212,0.08);
+}
+
+.skill-card:hover::before { transform: scaleX(1); }
+
+.skill-icon {
+  font-size: 28px;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.skill-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.skill-card p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.skill-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+
+.skill-tag {
+  background: rgba(124,58,237,0.1);
+  border: 1px solid rgba(124,58,237,0.2);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  color: #a78bfa;
+  letter-spacing: 0.03em;
+}
+
+/* CERTIFICATIONS */
+#certifications { border-top: 1px solid var(--border); }
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.cert-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  transition: all 0.25s;
+}
+
+.cert-card:hover {
+  border-color: rgba(0,245,212,0.2);
+  transform: translateX(4px);
+  box-shadow: -4px 0 20px rgba(0,245,212,0.05);
+}
+
+.cert-logo {
+  width: 42px; height: 42px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+}
+
+.cert-info { flex: 1; }
+
+.cert-platform {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 0.2rem;
+}
+
+.cert-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 0.25rem;
+}
+
+.cert-status {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  display: inline-block;
+}
+
+.status-progress {
+  background: rgba(250,197,21,0.1);
+  color: #fbbf24;
+  border: 1px solid rgba(250,197,21,0.2);
+}
+
+.status-planned {
+  background: rgba(107,104,128,0.15);
+  color: var(--muted);
+  border: 1px solid rgba(107,104,128,0.2);
+}
+
+/* EXPERIENCE */
+#experience { border-top: 1px solid var(--border); }
+
+.exp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+.exp-col-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--violet);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.exp-col-label::before {
+  content: '';
+  width: 20px; height: 1px;
+  background: var(--violet);
+}
+
+.timeline { position: relative; padding-left: 1.5rem; }
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 6px; bottom: 6px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--violet), transparent);
+}
+
+.timeline-item { position: relative; margin-bottom: 2.5rem; }
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -1.9rem; top: 6px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--violet);
+  box-shadow: 0 0 10px var(--violet);
+}
+
+.timeline-date {
+  font-size: 11px;
+  color: var(--violet);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.timeline-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+}
+
+.timeline-org {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+.timeline-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+/* CONTACT */
+#contact { border-top: 1px solid var(--border); }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.contact-text p {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.9;
+  margin-bottom: 1rem;
+}
+
+.contact-text p strong { color: var(--text); }
+
+.contact-links { display: flex; flex-direction: column; gap: 1rem; }
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 14px;
+  transition: all 0.25s;
+  cursor: none;
+}
+
+.contact-link:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  transform: translateX(6px);
+  box-shadow: var(--glow-cyan);
+}
+
+.contact-link-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  transition: all 0.25s;
+}
+
+.contact-link:hover .contact-link-icon {
+  background: rgba(0,245,212,0.08);
+  border-color: var(--cyan);
+}
+
+.contact-arrow {
+  margin-left: auto;
+  font-size: 14px;
+  color: var(--muted);
+  transition: transform 0.2s;
+}
+
+.contact-link:hover .contact-arrow { transform: translateX(4px); color: var(--cyan); }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+footer p { font-size: 12px; color: var(--muted); letter-spacing: 0.04em; }
+
+.footer-glow {
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 300px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  box-shadow: 0 0 20px var(--cyan);
+}
+
+/* REVEAL ANIMATION */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible { opacity: 1; transform: none; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--violet); border-radius: 2px; }
+
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  #hero, .section-wrap { padding: 6rem 1.5rem 4rem; }
+  .about-grid, .exp-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+  .cert-grid { grid-template-columns: 1fr; }
+  footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+}
+
+@media (max-width: 560px) {
+  .skills-grid { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 <body>
 
-  <!-- CUSTOM CURSOR -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-  <!-- ==============================
-       NAVIGATION
-  ================================= -->
-  <nav>
-    <a href="#" class="nav-logo">CCO</a>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#certifications">Certs</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">CCO</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-  <!-- ==============================
-       HERO SECTION
-  ================================= -->
-  <section id="hero">
-    <div class="hero-bg-grid"></div>
-    <div class="hero-orb-1"></div>
-    <div class="hero-orb-2"></div>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-orb-1"></div>
+  <div class="hero-orb-2"></div>
+  <div class="hero-content">
+    <div class="hero-tag"><span class="hero-tag-dot"></span> Open to opportunities</div>
+    <h1 class="hero-name">
+      <span class="name-line-1">Chioma</span>
+      <span class="name-line-2">Christabel</span>
+      <span class="name-line-3">Okpetah.</span>
+    </h1>
+    <p class="hero-desc">
+      <strong>Machine Learning Engineer</strong> passionate about building intelligent systems
+      that learn, adapt, and create real-world impact. Specialising in deep learning,
+      NLP, and end-to-end ML pipelines.
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-primary">Let's Connect →</a>
+      <a href="#skills" class="btn btn-outline">Explore My Skills</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
 
-    <div class="hero-content">
-      <div class="hero-tag">
-        <span class="hero-tag-dot"></span>
-        Open to opportunities
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-wrap">
+    <div class="about-grid">
+      <div class="about-avatar reveal">
+        <div class="avatar-box">
+          <img class="avatar-photo" id="profilePhoto" src="" alt="Chioma Christabel Okpetah">
+          <span class="avatar-initials" id="avatarInitials">CCO</span>
+        </div>
+        <div class="about-tag-row">
+          <span class="chip">🇳🇬 Nigeria</span>
+          <span class="chip">ML Engineer</span>
+          <span class="chip">Open to Work</span>
+        </div>
       </div>
-
-      <h1 class="hero-name">
-        <span class="name-line-1">Chioma</span>
-        <span class="name-line-2">Christabel</span>
-        <span class="name-line-3">Okpetah.</span>
-      </h1>
-
-      <p class="hero-desc">
-        <strong>Machine Learning Engineer</strong> passionate about building intelligent systems
-        that learn, adapt, and create real-world impact. Specialising in deep learning,
-        NLP, and end-to-end ML pipelines.
-      </p>
-
-      <div class="hero-ctas">
-        <a href="#contact" class="btn btn-primary">Let's Connect →</a>
-        <a href="#skills" class="btn btn-outline">Explore My Skills</a>
+      <div class="about-text reveal">
+        <div class="section-header">
+          <div class="section-eyebrow">About Me</div>
+          <h2 class="section-title">Building the future,<br>one model at a time.</h2>
+        </div>
+        <p>
+          I'm <strong>Chioma Christabel Okpetah</strong>, a Machine Learning Engineer based in Nigeria.
+          I ventured into tech driven by a deep curiosity about how machines can learn to think —
+          and a desire to build systems that make life smarter.
+        </p>
+        <p>
+          My focus spans the full ML lifecycle: from <strong>data collection and feature engineering</strong>,
+          to model training, rigorous evaluation, and shipping to production. I believe great ML is
+          not just about accuracy — it's about building systems people can trust and use.
+        </p>
+        <p>
+          I'm actively growing through structured learning, hands-on projects, and community.
+          I'm looking for opportunities where I can contribute, grow fast, and work on problems
+          that actually matter.
+        </p>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="hero-scroll">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Expertise</div>
+      <h2 class="section-title">Technical Skills</h2>
     </div>
-  </section>
-
-  <!-- ==============================
-       ABOUT SECTION
-  ================================= -->
-  <section id="about">
-    <div class="section-wrap">
-      <div class="about-grid">
-
-        <!-- Photo / Avatar -->
-        <div class="reveal">
-          <div class="avatar-box">
-            <!--
-              TO ADD YOUR PHOTO:
-              1. Place your photo in this same folder
-              2. Replace "YOUR_PHOTO.jpg" with your actual filename e.g. "chioma.jpg"
-              3. In style.css find .avatar-photo and change display:none to display:block
-              4. You can also remove or hide the .avatar-initials span
-            -->
-            <img class="avatar-photo" src="YOUR_PHOTO.jpg" alt="Chioma Christabel Okpetah">
-            <span class="avatar-initials">CCO</span>
-          </div>
-          <div class="about-tag-row">
-            <span class="chip">🇳🇬 Nigeria</span>
-            <span class="chip">ML Engineer</span>
-            <span class="chip">Open to Work</span>
-          </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <span class="skill-icon">🤖</span>
+        <h3>Machine Learning</h3>
+        <p>Supervised & unsupervised learning, model evaluation, hyperparameter tuning, and pipeline building.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Scikit-learn</span>
+          <span class="skill-tag">XGBoost</span>
+          <span class="skill-tag">Random Forests</span>
+          <span class="skill-tag">SVMs</span>
         </div>
-
-        <!-- Bio text -->
-        <div class="about-text reveal">
-          <div class="section-header">
-            <div class="section-eyebrow">About Me</div>
-            <h2 class="section-title">Building the future,<br>one model at a time.</h2>
-          </div>
-          <p>
-            I'm <strong>Chioma Christabel Okpetah</strong>, a Machine Learning Engineer based in Nigeria.
-            I ventured into tech driven by a deep curiosity about how machines can learn to think —
-            and a desire to build systems that make life smarter.
-          </p>
-          <p>
-            My focus spans the full ML lifecycle: from <strong>data collection and feature engineering</strong>,
-            to model training, rigorous evaluation, and shipping to production. I believe great ML is
-            not just about accuracy — it's about building systems people can trust and use.
-          </p>
-          <p>
-            I'm actively growing through structured learning, hands-on projects, and community.
-            I'm looking for opportunities where I can contribute, grow fast, and work on problems
-            that actually matter.
-          </p>
-        </div>
-
       </div>
-    </div>
-  </section>
-
-  <!-- ==============================
-       SKILLS SECTION
-  ================================= -->
-  <section id="skills">
-    <div class="section-wrap">
-      <div class="section-header reveal">
-        <div class="section-eyebrow">Expertise</div>
-        <h2 class="section-title">Technical Skills</h2>
+      <div class="skill-card reveal">
+        <span class="skill-icon">🧠</span>
+        <h3>Deep Learning</h3>
+        <p>Neural network architectures for vision, NLP, and sequential modelling tasks.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">PyTorch</span>
+          <span class="skill-tag">TensorFlow</span>
+          <span class="skill-tag">Keras</span>
+          <span class="skill-tag">CNNs</span>
+          <span class="skill-tag">RNNs</span>
+        </div>
       </div>
-
-      <div class="skills-grid">
-
-        <div class="skill-card reveal">
-          <span class="skill-icon">🤖</span>
-          <h3>Machine Learning</h3>
-          <p>Supervised & unsupervised learning, model evaluation, hyperparameter tuning, and pipeline building.</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Scikit-learn</span>
-            <span class="skill-tag">XGBoost</span>
-            <span class="skill-tag">Random Forests</span>
-            <span class="skill-tag">SVMs</span>
-          </div>
+      <div class="skill-card reveal">
+        <span class="skill-icon">💬</span>
+        <h3>NLP & Generative AI</h3>
+        <p>Language models, fine-tuning transformers, RAG pipelines, and prompt engineering.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">HuggingFace</span>
+          <span class="skill-tag">LangChain</span>
+          <span class="skill-tag">RAG</span>
+          <span class="skill-tag">Transformers</span>
         </div>
-
-        <div class="skill-card reveal">
-          <span class="skill-icon">🧠</span>
-          <h3>Deep Learning</h3>
-          <p>Neural network architectures for vision, NLP, and sequential modelling tasks.</p>
-          <div class="skill-tags">
-            <span class="skill-tag">PyTorch</span>
-            <span class="skill-tag">TensorFlow</span>
-            <span class="skill-tag">Keras</span>
-            <span class="skill-tag">CNNs</span>
-            <span class="skill-tag">RNNs</span>
-          </div>
+      </div>
+      <div class="skill-card reveal">
+        <span class="skill-icon">📊</span>
+        <h3>Data Engineering</h3>
+        <p>Building robust data pipelines, feature engineering, and large-scale data processing.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Pandas</span>
+          <span class="skill-tag">NumPy</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">Spark</span>
         </div>
-
-        <div class="skill-card reveal">
-          <span class="skill-icon">💬</span>
-          <h3>NLP & Generative AI</h3>
-          <p>Language models, fine-tuning transformers, RAG pipelines, and prompt engineering.</p>
-          <div class="skill-tags">
-            <span class="skill-tag">HuggingFace</span>
-            <span class="skill-tag">LangChain</span>
-            <span class="skill-tag">RAG</span>
-            <span class="skill-tag">Transformers</span>
-          </div>
+      </div>
+      <div class="skill-card reveal">
+        <span class="skill-icon">🚀</span>
+        <h3>MLOps & Deployment</h3>
+        <p>Taking models from notebook to production with monitoring and CI/CD pipelines.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">MLflow</span>
+          <span class="skill-tag">FastAPI</span>
+          <span class="skill-tag">AWS SageMaker</span>
         </div>
-
-        <div class="skill-card reveal">
-          <span class="skill-icon">📊</span>
-          <h3>Data Engineering</h3>
-          <p>Building robust data pipelines, feature engineering, and large-scale data processing.</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">Pandas</span>
-            <span class="skill-tag">NumPy</span>
-            <span class="skill-tag">SQL</span>
-            <span class="skill-tag">Spark</span>
-          </div>
+      </div>
+      <div class="skill-card reveal">
+        <span class="skill-icon">📈</span>
+        <h3>Data Visualisation</h3>
+        <p>Communicating insights through compelling, interactive, and publication-quality visuals.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Matplotlib</span>
+          <span class="skill-tag">Seaborn</span>
+          <span class="skill-tag">Plotly</span>
+          <span class="skill-tag">Tableau</span>
         </div>
-
-        <div class="skill-card reveal">
-          <span class="skill-icon">🚀</span>
-          <h3>MLOps & Deployment</h3>
-          <p>Taking models from notebook to production with monitoring and CI/CD pipelines.</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Docker</span>
-            <span class="skill-tag">MLflow</span>
-            <span class="skill-tag">FastAPI</span>
-            <span class="skill-tag">AWS SageMaker</span>
-          </div>
-        </div>
-
-        <div class="skill-card reveal">
-          <span class="skill-icon">📈</span>
-          <h3>Data Visualisation</h3>
-          <p>Communicating insights through compelling, interactive, and publication-quality visuals.</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Matplotlib</span>
-            <span class="skill-tag">Seaborn</span>
-            <span class="skill-tag">Plotly</span>
-            <span class="skill-tag">Tableau</span>
-          </div>
-        </div>
-
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ==============================
-       CERTIFICATIONS SECTION
-  ================================= -->
-  <section id="certifications">
-    <div class="section-wrap">
-      <div class="section-header reveal">
-        <div class="section-eyebrow">Credentials</div>
-        <h2 class="section-title">Certifications</h2>
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Credentials</div>
+      <h2 class="section-title">Certifications</h2>
+    </div>
+    <div class="cert-grid">
+      <div class="cert-card reveal">
+        <div class="cert-logo">🎓</div>
+        <div class="cert-info">
+          <div class="cert-platform">Coursera · DeepLearning.AI</div>
+          <div class="cert-name">Machine Learning Specialization — Andrew Ng</div>
+          <span class="cert-status status-progress">In Progress</span>
+        </div>
       </div>
-
-      <div class="cert-grid">
-
-        <div class="cert-card reveal">
-          <div class="cert-logo">🎓</div>
-          <div>
-            <div class="cert-platform">Coursera · DeepLearning.AI</div>
-            <div class="cert-name">Machine Learning Specialization — Andrew Ng</div>
-            <span class="cert-status status-progress">In Progress</span>
-          </div>
+      <div class="cert-card reveal">
+        <div class="cert-logo">🧠</div>
+        <div class="cert-info">
+          <div class="cert-platform">Coursera · DeepLearning.AI</div>
+          <div class="cert-name">Deep Learning Specialization</div>
+          <span class="cert-status status-progress">In Progress</span>
         </div>
-
-        <div class="cert-card reveal">
-          <div class="cert-logo">🧠</div>
-          <div>
-            <div class="cert-platform">Coursera · DeepLearning.AI</div>
-            <div class="cert-name">Deep Learning Specialization</div>
-            <span class="cert-status status-progress">In Progress</span>
-          </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-logo">📊</div>
+        <div class="cert-info">
+          <div class="cert-platform">DataCamp</div>
+          <div class="cert-name">Data Scientist with Python Career Track</div>
+          <span class="cert-status status-progress">In Progress</span>
         </div>
-
-        <div class="cert-card reveal">
-          <div class="cert-logo">📊</div>
-          <div>
-            <div class="cert-platform">DataCamp</div>
-            <div class="cert-name">Data Scientist with Python Career Track</div>
-            <span class="cert-status status-progress">In Progress</span>
-          </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-logo">🤖</div>
+        <div class="cert-info">
+          <div class="cert-platform">DataCamp</div>
+          <div class="cert-name">Machine Learning Scientist with Python</div>
+          <span class="cert-status status-planned">Planned</span>
         </div>
-
-        <div class="cert-card reveal">
-          <div class="cert-logo">🤖</div>
-          <div>
-            <div class="cert-platform">DataCamp</div>
-            <div class="cert-name">Machine Learning Scientist with Python</div>
-            <span class="cert-status status-planned">Planned</span>
-          </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-logo">☁️</div>
+        <div class="cert-info">
+          <div class="cert-platform">Google · Coursera</div>
+          <div class="cert-name">Google Advanced Data Analytics Certificate</div>
+          <span class="cert-status status-planned">Planned</span>
         </div>
-
-        <div class="cert-card reveal">
-          <div class="cert-logo">☁️</div>
-          <div>
-            <div class="cert-platform">Google · Coursera</div>
-            <div class="cert-name">Google Advanced Data Analytics Certificate</div>
-            <span class="cert-status status-planned">Planned</span>
-          </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-logo">🔬</div>
+        <div class="cert-info">
+          <div class="cert-platform">Coursera · DeepLearning.AI</div>
+          <div class="cert-name">MLOps Specialization</div>
+          <span class="cert-status status-planned">Planned</span>
         </div>
-
-        <div class="cert-card reveal">
-          <div class="cert-logo">🔬</div>
-          <div>
-            <div class="cert-platform">Coursera · DeepLearning.AI</div>
-            <div class="cert-name">MLOps Specialization</div>
-            <span class="cert-status status-planned">Planned</span>
-          </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-logo">💬</div>
+        <div class="cert-info">
+          <div class="cert-platform">Coursera · DeepLearning.AI</div>
+          <div class="cert-name">Natural Language Processing Specialization</div>
+          <span class="cert-status status-planned">Planned</span>
         </div>
-
-        <div class="cert-card reveal">
-          <div class="cert-logo">💬</div>
-          <div>
-            <div class="cert-platform">Coursera · DeepLearning.AI</div>
-            <div class="cert-name">Natural Language Processing Specialization</div>
-            <span class="cert-status status-planned">Planned</span>
-          </div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-logo">🏆</div>
+        <div class="cert-info">
+          <div class="cert-platform">AWS</div>
+          <div class="cert-name">AWS Certified Machine Learning — Specialty</div>
+          <span class="cert-status status-planned">Planned</span>
         </div>
-
-        <div class="cert-card reveal">
-          <div class="cert-logo">🏆</div>
-          <div>
-            <div class="cert-platform">AWS</div>
-            <div class="cert-name">AWS Certified Machine Learning — Specialty</div>
-            <span class="cert-status status-planned">Planned</span>
-          </div>
-        </div>
-
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ==============================
-       EXPERIENCE SECTION
-  ================================= -->
-  <section id="experience">
-    <div class="section-wrap">
-      <div class="section-header reveal">
-        <div class="section-eyebrow">Journey</div>
-        <h2 class="section-title">Education &<br>Experience</h2>
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Journey</div>
+      <h2 class="section-title">Education &<br>Experience</h2>
+    </div>
+    <div class="exp-grid">
+      <div class="reveal">
+        <div class="exp-col-label">Learning</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">2024 — Present</div>
+            <div class="timeline-title">Machine Learning & AI</div>
+            <div class="timeline-org">Self-directed / Coursera / DataCamp</div>
+            <div class="timeline-desc">Structured study across ML, deep learning, NLP, and MLOps through top-tier online programmes.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2024 — Present</div>
+            <div class="timeline-title">Python for Data Science</div>
+            <div class="timeline-org">DataCamp</div>
+            <div class="timeline-desc">Building strong foundations in Python, Pandas, NumPy, and data visualisation for ML workflows.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">Ongoing</div>
+            <div class="timeline-title">Kaggle Competitions</div>
+            <div class="timeline-org">Kaggle</div>
+            <div class="timeline-desc">Participating in real-world ML challenges to sharpen modelling and problem-solving skills.</div>
+          </div>
+        </div>
       </div>
-
-      <div class="exp-grid">
-
-        <!-- LEFT: Education -->
-        <div class="reveal">
-          <div class="exp-col-label">Learning</div>
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-date">2024 — Present</div>
-              <div class="timeline-title">Machine Learning & AI</div>
-              <div class="timeline-org">Self-directed / Coursera / DataCamp</div>
-              <div class="timeline-desc">Structured study across ML, deep learning, NLP, and MLOps through top-tier online programmes.</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-date">2024 — Present</div>
-              <div class="timeline-title">Python for Data Science</div>
-              <div class="timeline-org">DataCamp</div>
-              <div class="timeline-desc">Building strong foundations in Python, Pandas, NumPy, and data visualisation for ML workflows.</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-date">Ongoing</div>
-              <div class="timeline-title">Kaggle Competitions</div>
-              <div class="timeline-org">Kaggle</div>
-              <div class="timeline-desc">Participating in real-world ML challenges to sharpen modelling and problem-solving skills.</div>
-            </div>
+      <div class="reveal">
+        <div class="exp-col-label">Experience</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">2024 — Present</div>
+            <div class="timeline-title">Independent ML Projects</div>
+            <div class="timeline-org">Personal Portfolio</div>
+            <div class="timeline-desc">Building end-to-end ML systems — from raw data to deployed APIs — to develop practical engineering skills.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">Open to opportunities</div>
+            <div class="timeline-title">Seeking Junior ML Roles</div>
+            <div class="timeline-org">Internships · Entry-level · Freelance</div>
+            <div class="timeline-desc">Eager to join a team where I can contribute, learn fast, and grow into a senior ML engineer.</div>
           </div>
         </div>
-
-        <!-- RIGHT: Experience -->
-        <div class="reveal">
-          <div class="exp-col-label">Experience</div>
-          <div class="timeline">
-            <div class="timeline-item">
-              <div class="timeline-date">2024 — Present</div>
-              <div class="timeline-title">Independent ML Projects</div>
-              <div class="timeline-org">Personal Portfolio</div>
-              <div class="timeline-desc">Building end-to-end ML systems — from raw data to deployed APIs — to develop practical engineering skills.</div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-date">Open to opportunities</div>
-              <div class="timeline-title">Seeking Junior ML Roles</div>
-              <div class="timeline-org">Internships · Entry-level · Freelance</div>
-              <div class="timeline-desc">Eager to join a team where I can contribute, learn fast, and grow into a senior ML engineer.</div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ==============================
-       CONTACT SECTION
-  ================================= -->
-  <section id="contact">
-    <div class="section-wrap">
-      <div class="contact-grid">
-
-        <div class="reveal">
-          <div class="section-eyebrow">Get in Touch</div>
-          <h2 class="section-title" style="margin-bottom:1.5rem;">Let's build something<br>intelligent.</h2>
-          <p class="contact-intro">
-            I'm open to <strong>internships</strong>, entry-level ML engineering roles,
-            and freelance collaborations. If you're working on something in AI, I'd love to connect.
-          </p>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-wrap">
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="section-eyebrow">Get in Touch</div>
+        <h2 class="section-title" style="margin-bottom:1.5rem;">Let's build something<br>intelligent.</h2>
+        <p style="font-size:15px;color:var(--muted);line-height:1.9;">
+          I'm open to <strong style="color:var(--text);">internships</strong>, entry-level ML engineering roles,
+          and freelance collaborations. If you're working on something in AI, I'd love to connect.
+        </p>
+      </div>
+      <div class="reveal">
+        <div class="contact-links">
+          <a href="mailto:okpetahchiomachristabel@gmail.com" class="contact-link">
+            <div class="contact-link-icon">✉️</div>
+            okpetahchiomachristabel@gmail.com
+            <span class="contact-arrow">→</span>
+          </a>
+          <a href="https://github.com/Chiomachristabel" target="_blank" class="contact-link">
+            <div class="contact-link-icon">🐙</div>
+            github.com/Chiomachristabel
+            <span class="contact-arrow">→</span>
+          </a>
+          <a href="https://linkedin.com/in/chioma-okpetah-1a39ba250" target="_blank" class="contact-link">
+            <div class="contact-link-icon">💼</div>
+            linkedin.com/in/chioma-okpetah
+            <span class="contact-arrow">→</span>
+          </a>
+          <a href="https://x.com/tech_lassie" target="_blank" class="contact-link">
+            <div class="contact-link-icon">𝕏</div>
+            @tech_lassie
+            <span class="contact-arrow">→</span>
+          </a>
         </div>
-
-        <div class="reveal">
-          <div class="contact-links">
-            <a href="mailto:okpetahchiomachristabel@gmail.com" class="contact-link">
-              <div class="contact-link-icon">✉️</div>
-              okpetahchiomachristabel@gmail.com
-              <span class="contact-arrow">→</span>
-            </a>
-            <a href="https://github.com/Chiomachristabel" target="_blank" class="contact-link">
-              <div class="contact-link-icon">🐙</div>
-              github.com/Chiomachristabel
-              <span class="contact-arrow">→</span>
-            </a>
-            <a href="https://linkedin.com/in/chioma-okpetah-1a39ba250" target="_blank" class="contact-link">
-              <div class="contact-link-icon">💼</div>
-              linkedin.com/in/chioma-okpetah
-              <span class="contact-arrow">→</span>
-            </a>
-            <a href="https://x.com/tech_lassie" target="_blank" class="contact-link">
-              <div class="contact-link-icon">𝕏</div>
-              @tech_lassie
-              <span class="contact-arrow">→</span>
-            </a>
-          </div>
-        </div>
-
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>Chioma Christabel Okpetah — ML Engineer</p>
-    <p>© 2024 · Built with passion</p>
-    <div class="footer-glow"></div>
-  </footer>
+<footer>
+  <p>Chioma Christabel Okpetah — ML Engineer</p>
+  <p>© 2024 · Built with passion</p>
+  <div class="footer-glow"></div>
+</footer>
 
-  <!-- Your JavaScript file -->
-  <script src="script.js"></script>
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
 
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+  });
+
+  function animateRing() {
+    rx += (mx - rx - 20) * 0.12;
+    ry += (my - ry - 20) * 0.12;
+    ring.style.transform = `translate(${rx}px, ${ry}px)`;
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform += ' scale(2)';
+      ring.style.width = '60px';
+      ring.style.height = '60px';
+      ring.style.borderColor = 'rgba(0,245,212,0.6)';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.width = '40px';
+      ring.style.height = '40px';
+      ring.style.borderColor = 'rgba(0,245,212,0.4)';
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 5) * 0.1 + 's';
+    observer.observe(el);
+  });
+
+  // Active nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 200) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--cyan)' : '';
+    });
+  });
+</script>
 </body>
 </html>
